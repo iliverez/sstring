@@ -32,11 +32,11 @@ Additionally, some python strings functionality is offered like:
     // will result to new sstring "🐼,🐵,💿";
     ```
   * split with a delimiter. The delimiter may be any of char, const char*, std::string or sstring::String
-  ```C++
-  sstring::String s("my:test");
-  std::vector<sstring::String> v = s.split(":");
-  // will return a vector with sstring:String elements "my" and "test"
-  ```
+    ```C++
+    sstring::String s("my:test");
+    std::vector<sstring::String> v = s.split(":");
+    // will return a vector with sstring:String elements "my" and "test"
+    ```
   See doc/API.md for full documentation
         
 ## Build
