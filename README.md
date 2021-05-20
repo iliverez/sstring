@@ -21,7 +21,7 @@ Additionally, some python strings functionality is offered like:
    auto s = sstring::String("My 🎃 test");
    std::cout << s[3] << " Nice pumpkin!" << std::endl;
    
-   // will result to:'m
+   // will result to:
    // 🎃 Nice pumpkin!
    ```
   * string join: Join a vector or array of strings,sstrings or const chars with a given string 
