@@ -40,6 +40,8 @@ Additionally, some python strings functionality is offered like:
   See doc/API.md for full documentation
         
 ## Build
+To build sstring a c++17 compiler is required.
+
 ```bash
 mkdir build
 cd build && cmake ..
