@@ -39,8 +39,13 @@ namespace sstring {
         String operator+=(String && s);
         String operator+=(std::string &&s);
 
+        // return the std::string object of String
         [[nodiscard]] inline const std::string & stdstr() const {return str;}
+ 
+        // Get the size (number of bytes) of the String
         [[nodiscard]] inline size_t size() const {return str.size();}
+
+        // Get the length of the String as the number of graphemes in it
         [[nodiscard]] inline size_t slen() const {return len;}
         void  clear();
 
