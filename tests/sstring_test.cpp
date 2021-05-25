@@ -86,10 +86,24 @@ TEST(SStringTestSuite, substr_lft) {
     ASSERT_EQ(ss, tval);
 }
 
+TEST(SStringTestSuite, substr_lft_larger) {
+    sstring::String s("mytest");
+    auto ss = s(10);
+    sstring::String tval{""};
+    ASSERT_EQ(ss, tval);
+}
+
 TEST(SStringTestSuite, substr_negative_lft_one) {
     sstring::String s("mytest");
     auto ss = s(-1);
     sstring::String tval{"t"};
+    ASSERT_EQ(ss, tval);
+}
+
+TEST(SStringTestSuite, substr_negative_lft_larger) {
+    sstring::String s("mytest");
+    auto ss = s(-10);
+    sstring::String tval{"mytest"};
     ASSERT_EQ(ss, tval);
 }
 
