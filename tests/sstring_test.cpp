@@ -388,6 +388,13 @@ TEST(SStringTestSuite, split_consecutive_four_right) {
     ASSERT_EQ(v[5], "");
 }
 
+TEST(SStringTestSuite, split_not_found) {
+    sstring::String s("my:test");
+    std::vector<sstring::String> v = s.split(",");
+    ASSERT_EQ(v[0], "my:test");
+    ASSERT_EQ(v.size(), 1);
+}
+
 
 // -----------------------------------------------------------------
 // Test concatenation operators

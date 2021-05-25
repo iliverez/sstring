@@ -201,6 +201,7 @@ namespace sstring {
             if (pos == std::string::npos) {
                 if (v.empty()) {
                     v.emplace_back(*this);
+                    return v;
                 }
                 break;
             }
