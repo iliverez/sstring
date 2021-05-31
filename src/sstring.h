@@ -41,7 +41,7 @@ namespace sstring {
 
         // return the std::string object of String
         [[nodiscard]] inline const std::string & stdstr() const {return str;}
- 
+
         // Get the size (number of bytes) of the String
         [[nodiscard]] inline size_t size() const {return str.size();}
 
