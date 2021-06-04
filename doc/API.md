@@ -37,7 +37,7 @@ Creates a String object where the argument *std::string* is moved to it
 
 ## Substrings
 
-### operator() (int64_t lft);
+### operator() (int64_t lft)
 Creates a substring starting from position lft.
 This is equivalent to Python's [] substring like 
 ```python 
@@ -59,3 +59,30 @@ std::cout << s(-4) << std::endl;
 ```
 will return `test`.
 If the negative lft is larger than the length of the String, a copy of the whole initial String will be returned.
+
+### operator() (int64_t lft, int64_t rgt)
+Creates a substring starting from position lft until rgt. Grapheme at rgt is not included.
+This is equivalent to Python's [] substring like 
+```python 
+s[1:4]
+```
+
+For example, to substring the String *"This is a test"* from position 1 to 4, it would be:
+```C++
+sstring::String s("This is a test");
+std::cout << s(1,4) << std::endl;
+```
+and would return `his`.
+
+If rgt is larger than the String length, the lengh of the String is used as rgt.
+If both lft and rgt are larger than the length of String, an empty string is returned
+If negative indices are used, counting starts from the end of String (but counts from 1, not 0). For example:
+
+```C++
+sstring::String s("This is a test");
+std::cout << s(-4, -1) << std::endl;
+```
+will return ```tes```
+
+If negative lft is larger than the length of String, but rgt is valid, lft is considered the start of the String.
+If both negative indices are larger than length, an empty string is returned.
