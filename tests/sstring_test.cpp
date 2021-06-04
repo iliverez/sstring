@@ -132,6 +132,18 @@ TEST(SStringTestSuite, lft_lrg_right_neg) {
     ASSERT_EQ(ss, sstring::String{""});
 }
 
+TEST(SStringTestSuite, lrg_lft_neg_right_neg) {
+    sstring::String s("This is a test");
+    auto ss = s(-20, -4);
+    ASSERT_EQ(ss, sstring::String{"This is a "});
+}
+
+TEST(SStringTestSuite, lrg_lft_neg_lrg_right_neg) {
+    sstring::String s("This is a test");
+    auto ss = s(-20, -19);
+    ASSERT_EQ(ss, sstring::String{""});
+}
+
 TEST(SStringTestSuite, substr_bndr_lft) {
     sstring::String s("mytest");
     auto ss = s(0, 4);
