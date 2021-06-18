@@ -194,6 +194,30 @@ TEST(SStringTestSuite, grapheme_at_index_end_double_utf) {
     ASSERT_EQ(ss, "🐵");
 }
 
+TEST(SStringTestSuite, grapheme_at_out_of_range) {
+    sstring::String s("Test index 🐼🐼🐼 of grapheme 🐼🐵");
+    EXPECT_THROW({
+        try {
+            auto ss= s[128];
+        }
+        catch (const std::out_of_range& e) {
+            EXPECT_STREQ("Index out of bounds", e.what());
+            throw;
+        }
+    }, std::out_of_range);
+}
+
+TEST(SStringTestSuite, grapheme_at_index_neg_edge) {
+    sstring::String s("Test index 🐼🐼🐼 of grapheme 🐼🐵");
+    auto ss = s[-1];
+    ASSERT_EQ(ss, "🐵");
+}
+
+TEST(SStringTestSuite, grapheme_at_index_neg) {
+    sstring::String s("Test index 🐼🐼🐼 of grapheme 🐼🐵");
+    auto ss = s[-5];
+    ASSERT_EQ(ss, "m");
+}
 
 // -----------------------------------------------------------------
 // Test join

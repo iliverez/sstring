@@ -132,8 +132,11 @@ namespace sstring {
         if (idx >= 0) {
             return this->operator()(idx, idx+1);
         } else {
-            int64_t tmp = len -1 -idx;
-            return this->operator()(tmp, tmp+1);
+            if (idx == -1) {
+                return this->operator()(idx);
+            } else {
+                return this->operator()(idx, idx+1);
+            }
         }
     }
 
