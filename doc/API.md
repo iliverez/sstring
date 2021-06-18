@@ -86,3 +86,11 @@ will return ```tes```
 
 If negative lft is larger than the length of String, but rgt is valid, lft is considered the start of the String.
 If both negative indices are larger than length, an empty string is returned.
+
+## Grapheme at index
+
+### operator[] (int64_t idx)
+Return the grapheme at index idx. If the index is larger than the length of the String, it throws an std::out_of_range exception.
+Negative index is also supported.
+
+
