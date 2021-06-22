@@ -29,12 +29,9 @@ namespace sstring {
         // grapheme at index operator
         String operator[] (int64_t idx);
 
-
-        // += operator overloads
+        // += (String extend) operator overloads
         String operator+=(const String &s);
-
         String operator+=(const char *s);
-
         String operator+=(const std::string &s);
         String operator+=(String && s);
         String operator+=(std::string &&s);
@@ -49,7 +46,15 @@ namespace sstring {
         [[nodiscard]] inline size_t slen() const {return len;}
         void  clear();
 
-
+        // join the elements of container (iterable) C with the value of this
+        // String as a delimiter.
+        //
+        // If the length of the container is 1, the unique element of the container
+        // is returned without the value of this String.
+        //
+        // If the length of the container is 0, an emtpty String is returned.
+        //
+        // If this string is empty, the elements of the container are concatenated.
         template <typename C>
         String join(const C & cntr) {
             auto max = std::size(cntr);
@@ -67,6 +72,8 @@ namespace sstring {
             return r;
         }
 
+        // split a String using the given delimiter.
+        // Funcion overloads are available for any type of delimiter
         std::vector<String> split(const char &d, unsigned int cnt=0);
         std::vector<String> split(const char *d, unsigned int cnt=0);
         std::vector<String> split(const std::string &d, unsigned int cnt=0);
@@ -84,6 +91,9 @@ namespace sstring {
 
     };
 
+
+    // String contantenation. Various types are supported, both for copy
+    // or move semantics
     String operator+(const String &lhs, const String &rhs);
     String operator+(String &&lhs, String &&rhs);
     String operator+(String &&lhs, const String &rhs);
@@ -102,17 +112,19 @@ namespace sstring {
 
     String operator+(const std::string &lhs, const char *rhs);
     String operator+(const char *lhs, const String &rhs);
-
-
     String operator+(const char *lhs, const std::string &rhs);
 
+    // String equality. Notice that it refers to string content
+    // equality and not to object (type) equality.
     bool operator==(const String &lhs, const String &rhs);
     bool operator==(const String &lhs, const char *rhs);
     bool operator==(const char *lhs, const String &rhs);
 
+    // iostream support (input/output)
     std::ostream & operator << (std::ostream &out, const String &s);
     std::istream & operator >> (std::istream &is, String &s);
 
+    // Return the max allowed size for String
     inline static size_t max_size();
 }
 
