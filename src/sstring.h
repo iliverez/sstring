@@ -43,7 +43,7 @@ namespace sstring {
         [[nodiscard]] inline size_t size() const {return str.size();}
 
         // Get the length of the String as the number of graphemes in it
-        [[nodiscard]] inline size_t slen() const {return len;}
+        [[nodiscard]] inline int64_t slen() const {return len;}
         void  clear();
 
         // join the elements of container (iterable) C with the value of this
@@ -82,7 +82,7 @@ namespace sstring {
 
     protected:
         std::string str;
-        size_t len;
+        int64_t len;
         std::vector<uint64_t> gpos;
 
 

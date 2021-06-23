@@ -73,7 +73,7 @@ namespace sstring {
 
     String
     String::operator()(int64_t lft) {
-        auto rgt = len;
+        int64_t rgt = len;
         return operator()(lft, rgt);
     }
 
@@ -93,7 +93,7 @@ namespace sstring {
         }
 
         if (lft < 0) {
-            size_t tmp = len + lft;
+            int64_t tmp = len + lft;
             s = tmp < 0 ? 0 : gpos[tmp];
         }
 
@@ -121,7 +121,6 @@ namespace sstring {
         if (s > f) {
             return String();
         }
-
         return String(str.substr(s, f - s));
     }
 
@@ -142,15 +141,15 @@ namespace sstring {
 
     String String::operator+=(const String &s) {
         str += s.str;
-        len += s.len;
         for (auto e : s.gpos) {
             gpos.emplace_back(e + len);
         }
+        len += s.len;
         return *this;
     }
 
     String String::operator+=(const char *s) {
-        this->str += s;
+        this->str += std::string(s);
         rebuild();
         return *this;
     }
@@ -162,9 +161,8 @@ namespace sstring {
     }
 
     String String::operator+=(String &&s) {
-        str = std::move(s.str);
-        len = s.len;
-        gpos = std::move(s.gpos);
+        str += std::move(s.str);
+        rebuild();
         s.clear();
         return *this;
     }

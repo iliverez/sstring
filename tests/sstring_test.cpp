@@ -29,6 +29,39 @@ TEST(SStringTestSuite, mvassing) {
     ASSERT_EQ(s2, "mytest");
 }
 // -----------------------------------------------------------------
+// Test extension
+TEST(SStringTestSuite, extend_string) {
+    sstring::String s("mytest");
+    sstring::String s2("δsuper");
+    s += s2;
+    ASSERT_EQ(s, "mytestδsuper");
+    ASSERT_EQ(s[8], "u");
+}
+
+TEST(SStringTestSuite, extend_std_string) {
+    sstring::String s("mytest");
+    std::string s2("δsuper");
+    s += s2;
+    ASSERT_EQ(s, "mytestδsuper");
+    ASSERT_EQ(s[8], "u");
+}
+
+TEST(SStringTestSuite, extend_const_char) {
+    sstring::String s("mytest");
+    s += "δsuper";
+    ASSERT_EQ(s, "mytestδsuper");
+    ASSERT_EQ(s[8], "u");
+}
+
+TEST(SStringTestSuite, extend_move) {
+    sstring::String s("mytest");
+    s += sstring::String("δsuper");
+    ASSERT_EQ(s, "mytestδsuper");
+    ASSERT_EQ(s[8], "u");
+}
+
+
+// -----------------------------------------------------------------
 // Test length
 TEST(SStringTestSuite, slen) {
     sstring::String s{"mytest"};
