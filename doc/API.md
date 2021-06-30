@@ -94,3 +94,15 @@ Return the grapheme at index idx. If the index is larger than the length of the 
 Negative index is also supported.
 
 
+## Extend string
+
+### opearator+=(const String &s)
+Extend current string with the content of sstring::String s. String s may be empty.
+
+### opearator+=(const char *s)
+Extend current string with the contents of *const char *s*. *const char *s* may be empty.
+
+### opearator+=(const String &s)
+Extend current string with the content of sstring::String s. String s may be empty.
+
+
