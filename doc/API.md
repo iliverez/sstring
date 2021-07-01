@@ -20,24 +20,24 @@ Copy constructor
 ### String(String &&s) noexcept
 Move constructor
 
-### operator=(const String &s)
+### String operator=(const String &s)
 Copy assignment
 
-### operator=(const char *s)
+### String operator=(const char *s)
 Assign a *const* *char* * to a String
 
-### operator=(const std::string &s)
+### String operator=(const std::string &s)
 Assign an *std::string* to a String
 
-### operator=(String &&s)
+### String operator=(String &&s)
 Move assignment
 
-### operator=(std::string &&s)
+### String operator=(std::string &&s)
 Creates a String object where the argument *std::string* is moved to it
 
 ## Substrings
 
-### operator() (int64_t lft)
+### String operator() (int64_t lft)
 Creates a substring starting from position lft.
 This is equivalent to Python's [] substring like 
 ```python 
@@ -89,20 +89,24 @@ If both negative indices are larger than length, an empty string is returned.
 
 ## Grapheme at index
 
-### operator[] (int64_t idx)
+### String operator[] (int64_t idx)
 Return the grapheme at index idx. If the index is larger than the length of the String, it throws an std::out_of_range exception.
 Negative index is also supported.
 
 
 ## Extend string
 
-### opearator+=(const String &s)
+### String opearator+=(const String &s)
 Extend current string with the content of sstring::String s. String s may be empty.
 
-### opearator+=(const char *s)
+### String opearator+=(const char *s)
 Extend current string with the contents of *const char *s*. *const char *s* may be empty.
 
-### opearator+=(const String &s)
-Extend current string with the content of sstring::String s. String s may be empty.
+### String opearator+=(const std::string &s)
+Extend current string with the content of std::string s. String s may be empty.
 
+### String operator+=(String && s)
+Extend current string with the content of sstring::String s. String s may be empty. Uses move semantics.
 
+### String operator+=(std::string &&s)
+Extend current string with the content of std::string s. String s may be empty. Uses move semantics.
