@@ -124,6 +124,10 @@ namespace sstring {
         return String(str.substr(s, f - s));
     }
 
+    String String::operator()(int64_t lft, int64_t rgt) const {
+        return (*this)(lft,rgt);
+    }
+
     String String::operator[](int64_t idx) {
         if (absl(idx) > max_size() or absl(idx) >= len) {
             throw std::out_of_range("Index out of bounds");
@@ -186,7 +190,7 @@ namespace sstring {
     std::vector<String> String::split(const char *d, unsigned int cnt) {
         return split(String(d), cnt);
     }
-    
+
     std::vector<String> String::split(const std::string &d, unsigned int cnt) {
         return split(String(d), cnt);
     }
@@ -215,6 +219,103 @@ namespace sstring {
         }
         return v;
     }
+
+    // ------------------------------------------------------------------------
+    // String alignment methods
+
+    String String::just(int64_t width, const String &c, Alignment dir) {
+
+        if (width <= len)
+            return String(*this);
+
+        auto fl = c;
+        String r;
+        int64_t le = (width-len) / fl.slen();
+        int64_t sp = (width-len) % fl.slen();
+
+        if (dir == Alignment::CENTER) {
+            r += just( ((len+width)/2) + ((len+width) % 2), fl, Alignment::RIGHT);
+            le = ((width - len) / 2) / fl.slen();
+            sp = ((width - len) / 2) % fl.slen();
+        }
+
+        if (dir == Alignment::LEFT)
+            r += str;
+
+        for (auto i=0; i < le; i++)
+            r += fl;
+        if (sp > 0)
+            r += fl(0, sp);
+
+        if (dir == Alignment::RIGHT)
+            r += str;
+
+        return r;
+    }
+
+    // Align right
+    String String::rjust(int64_t width, const String &c) {
+        return just(width, c, Alignment::RIGHT);
+    }
+
+    String String::rjust(int64_t width) {
+        return just(width, String(" "), Alignment::RIGHT);
+    }
+
+    String String::rjust(int64_t width, const char c) {
+        return just(width, String(std::string(1,c)), Alignment::RIGHT);
+    }
+
+    String String::rjust(int64_t width, const char *c) {
+        return just(width, String(c), Alignment::RIGHT);
+    }
+
+    String String::rjust(int64_t width, const std::string &c) {
+        return just(width, String(c), Alignment::RIGHT);
+    }
+
+    // Align left
+    String String::ljust(int64_t width, const String &c) {
+        return just(width, c, Alignment::LEFT);
+    }
+
+    String String::ljust(int64_t width) {
+        return just(width, String(" "), Alignment::LEFT);
+    }
+
+    String String::ljust(int64_t width, const char c) {
+        return just(width, String(std::string(1,c)), Alignment::LEFT);
+    }
+
+    String String::ljust(int64_t width, const char *c) {
+        return just(width, String(c), Alignment::LEFT);
+    }
+
+    String String::ljust(int64_t width, const std::string &c) {
+        return just(width, String(c), Alignment::LEFT);
+    }
+
+    // Align center
+    String String::center(int64_t width, const String &c) {
+        return just(width, c, Alignment::CENTER);
+    }
+
+    String String::center(int64_t width) {
+        return just(width, String(" "), Alignment::CENTER);
+    }
+
+    String String::center(int64_t width, const char c) {
+        return just(width, String(std::string(1,c)), Alignment::CENTER);
+    }
+
+    String String::center(int64_t width, const char *c) {
+        return just(width, String(c), Alignment::CENTER);
+    }
+
+    String String::center(int64_t width, const std::string &c) {
+        return just(width, String(c), Alignment::CENTER);
+    }
+
 
     // ------------------------------------------------------------------------
     // private methods
@@ -249,6 +350,8 @@ namespace sstring {
         }
     }
 
+    // ------------------------------------------------------------------------
+    //  Operators
     String operator+(const String &lhs, const String &rhs) {
         String r = lhs;
         r += rhs;

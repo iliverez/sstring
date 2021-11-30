@@ -183,6 +183,12 @@ TEST(SStringTestSuite, substr_bndr_lft) {
     ASSERT_EQ(ss, "myte");
 }
 
+TEST(SStringTestSuite, substr_2char) {
+    sstring::String s("my");
+    auto ss = s(0, 1);
+    ASSERT_EQ(ss, "m");
+}
+
 // -----------------------------------------------------------------
 // Test grapheme at index
 TEST(SStringTestSuite, grapheme_at_index) {
@@ -476,6 +482,251 @@ TEST(SStringTestSuite, split_not_found) {
     std::vector<sstring::String> v = s.split(",");
     ASSERT_EQ(v[0], "my:test");
     ASSERT_EQ(v.size(), 1);
+}
+
+
+// -----------------------------------------------------------------
+// Test alignment methods
+// Right
+TEST(SStringTestSuite, rjust_string) {
+    sstring::String s("test");
+    auto s2 = s.rjust(10);
+    ASSERT_EQ(s2, "      test");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, rjust_char) {
+    sstring::String s("test");
+    char c = '+';
+    auto s2 = s.rjust(10, c);
+    ASSERT_EQ(s2, "++++++test");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, rjust_string_utf) {
+    sstring::String s("τεστ");
+    auto s2 = s.rjust(10);
+    ASSERT_EQ(s2, "      τεστ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, rjust_string_fl_utf) {
+    sstring::String s("τεστ");
+    sstring::String fl(".");
+    auto s2 = s.rjust(10, fl);
+    ASSERT_EQ(s2, "......τεστ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+
+TEST(SStringTestSuite, rjust_string_multi_utf_fit) {
+    sstring::String s("τεστ");
+    sstring::String fl(".+");
+    auto s2 = s.rjust(10, fl);
+    ASSERT_EQ(s2, ".+.+.+τεστ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, rjust_string_multi_utf_nfit) {
+    sstring::String s("τεστ");
+    sstring::String fl(".+");
+    auto s2 = s.rjust(11, fl);
+    ASSERT_EQ(s2, ".+.+.+.τεστ");
+    ASSERT_EQ(s2.slen(), 11);
+}
+
+
+
+TEST(SStringTestSuite, rjust_string_char_utf) {
+    sstring::String s("τεστ");
+    auto s2 = s.rjust(10, '+');
+    ASSERT_EQ(s2, "++++++τεστ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, rjust_stdstr) {
+    sstring::String s("test");
+    std::string fl = ".";
+    auto s2 = s.rjust(10, fl);
+    ASSERT_EQ(s2, "......test");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, rjust_stdstr_utf) {
+    sstring::String s("τεστ");
+    std::string fl = "+";
+    auto s2 = s.rjust(10, fl);
+    ASSERT_EQ(s2, "++++++τεστ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, rjust_string_utf_large) {
+    sstring::String s("τεστ");
+    std::string fl = "+.-*";
+    auto s2 = s.rjust(7, fl);
+    ASSERT_EQ(s2, "+.-τεστ");
+    ASSERT_EQ(s2.slen(), 7);
+}
+
+
+// Left
+TEST(SStringTestSuite, ljust_string) {
+    sstring::String s("test");
+    auto s2 = s.ljust(10);
+    ASSERT_EQ(s2, "test      ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, ljust_char) {
+    sstring::String s("test");
+    char c = '+';
+    auto s2 = s.ljust(10, c);
+    ASSERT_EQ(s2, "test++++++");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, ljust_string_utf) {
+    sstring::String s("τεστ");
+    auto s2 = s.ljust(10);
+    ASSERT_EQ(s2, "τεστ      ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, ljust_string_fl_utf) {
+    sstring::String s("τεστ");
+    sstring::String fl(".");
+    auto s2 = s.ljust(10, fl);
+    ASSERT_EQ(s2, "τεστ......");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+
+TEST(SStringTestSuite, ljust_string_multi_utf_fit) {
+    sstring::String s("τεστ");
+    sstring::String fl(".+");
+    auto s2 = s.ljust(10, fl);
+    ASSERT_EQ(s2, "τεστ.+.+.+");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, ljust_string_multi_utf_nfit) {
+    sstring::String s("τεστ");
+    sstring::String fl(".+");
+    auto s2 = s.ljust(11, fl);
+    ASSERT_EQ(s2, "τεστ.+.+.+.");
+    ASSERT_EQ(s2.slen(), 11);
+}
+
+
+
+TEST(SStringTestSuite, ljust_string_char_utf) {
+    sstring::String s("τεστ");
+    auto s2 = s.ljust(10, '+');
+    ASSERT_EQ(s2, "τεστ++++++");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, ljust_stdstr) {
+    sstring::String s("test");
+    std::string fl = ".";
+    auto s2 = s.ljust(10, fl);
+    ASSERT_EQ(s2, "test......");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, ljust_stdstr_utf) {
+    sstring::String s("τεστ");
+    std::string fl = "+";
+    auto s2 = s.ljust(10, fl);
+    ASSERT_EQ(s2, "τεστ++++++");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, ljust_string_utf_large) {
+    sstring::String s("τεστ");
+    std::string fl = "+.-*";
+    auto s2 = s.ljust(7, fl);
+    ASSERT_EQ(s2, "τεστ+.-");
+    ASSERT_EQ(s2.slen(), 7);
+}
+
+
+// Center
+TEST(SStringTestSuite, center_string) {
+    sstring::String s("test");
+    auto s2 = s.center(10);
+    ASSERT_EQ(s2, "   test   ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_char) {
+    sstring::String s("test");
+    char c = '+';
+    auto s2 = s.center(10, c);
+    ASSERT_EQ(s2, "+++test+++");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_string_utf) {
+    sstring::String s("τεστ");
+    auto s2 = s.center(10);
+    ASSERT_EQ(s2, "   τεστ   ");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_string_fl_utf) {
+    sstring::String s("τεστ");
+    sstring::String fl(".");
+    auto s2 = s.center(10, fl);
+    ASSERT_EQ(s2, "...τεστ...");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_string_multi_utf_fit) {
+    sstring::String s("τεστ");
+    sstring::String fl(".+");
+    auto s2 = s.center(10, fl);
+    ASSERT_EQ(s2, ".+.τεστ.+.");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_string_multi_utf_nfit) {
+    sstring::String s("τεστ");
+    sstring::String fl(".+");
+    auto s2 = s.center(11, fl);
+    ASSERT_EQ(s2, ".+.+τεστ.+.");
+    ASSERT_EQ(s2.slen(), 11);
+}
+
+TEST(SStringTestSuite, center_string_char_utf) {
+    sstring::String s("τεστ");
+    auto s2 = s.center(10, '+');
+    ASSERT_EQ(s2, "+++τεστ+++");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_stdstr) {
+    sstring::String s("test");
+    std::string fl = ".";
+    auto s2 = s.center(10, fl);
+    ASSERT_EQ(s2, "...test...");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_stdstr_utf) {
+    sstring::String s("τεστ");
+    std::string fl = "+";
+    auto s2 = s.center(10, fl);
+    ASSERT_EQ(s2, "+++τεστ+++");
+    ASSERT_EQ(s2.slen(), 10);
+}
+
+TEST(SStringTestSuite, center_string_utf_large) {
+    sstring::String s("τεστ");
+    std::string fl = "+.-*";
+    auto s2 = s.center(10, fl);
+    ASSERT_EQ(s2, "+.-τεστ+.-");
+    ASSERT_EQ(s2.slen(), 10);
 }
 
 

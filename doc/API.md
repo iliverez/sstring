@@ -110,3 +110,90 @@ Extend current string with the content of sstring::String s. String s may be emp
 
 ### String operator+=(std::string &&s)
 Extend current string with the content of std::string s. String s may be empty. Uses move semantics.
+
+## Alignment
+The String class offers alignment capability (left, center, right). The alignment space is filled by default with the space char. A string or another char can be used to fill the alignment.
+
+The alignment methods return a new string with the aligned content or a copy of the initial String if the alignment space is smaller than the length of the String.
+
+If a negative value is used for the alignment space, a copy of the initial string is returned.
+
+If the length of the filling string is larger than the space to be filled, the first graphemes that fit will be used.
+
+For center alignment only:
+
+  * If the space cannot be equally divided, the extra space goes on the left side.
+  * if the filling string does not fit in the alignment space on both sides, it will be trimmed on both sides so that the result string is still centered.
+
+For example:
+```C++
+sstring::String s("test");
+std::cout << ":" << s.ljust(10) << ":" << std::endl;
+std::cout << ":" << s.ljust10, ".") << ":" << std::endl;
+std::cout << ":" << s.ljust(10, ".+") << ":" << std::endl;
+std::cout << ":" << s.ljust(11, ".+") << ":" << std::endl;
+std::cout << ":" << s.center(10, '.') << ":" << std::endl;
+std::cout << ":" << s.center(10, '.+') << ":" << std::endl;
+std::cout << ":" << s.center(10, ".+-*") << ":" << std::endl;
+std::cout << ":" << s.rjust(10, ".+") << ":" << std::endl;
+```
+will produce:
+
+```bash
+:test      :
+:test......:
+:test.+.+.+:
+:test.+.+.+.:
+:...test...:
+:.+.test.+.:
+:.+-test.+-:
+:.+.+.+test:
+```
+### String ljust(int64_t width)
+Align text on the left side of a space with given width. Space char is used as a filling char.
+
+### String ljust(int64_t width, const char c)
+Align text on the left side of a space with given width, using character c for filling the space.
+
+### String ljust(int64_t width, const std::string &c)
+Align text on the left side of a space with given width, using std::string c for filling the space.
+
+### String ljust(int64_t width, const char *c)
+Align text on the left side of a space with given width, using const char * c for filling the space.
+
+### String ljust(int64_t width, const String &c)
+Align text on the left side of a space with given width, using String c for filling the space.
+
+
+### String center(int64_t width)
+Align text on the left side of a space with given width. Space char is used as a filling char.
+
+### String center(int64_t width, const char c)
+Align text in the center of a space with given width, using character c for filling the space.
+
+### String center(int64_t width, const std::string &c)
+Align text in the center of a space with given width, using std::string c for filling the space.
+
+### String center(int64_t width, const char *c)
+Align text in the center of a space with given width, using const char * c for filling the space.
+
+### String centerint64_t width, const String &c)
+Align text in the center of a space with given width, using String c for filling the space.
+
+### String rjust(int64_t width)
+Align text on the right side of a space with given width. Space char is used as a filling char.
+
+### String rjust(int64_t width, const char c)
+Align text on the right side of a space with given width, using char c for filling the space.
+
+### String rjust(int64_t width, const std::string &c)
+Align text on the right side of a space with given width, std::string c for filling the space.
+
+### String rjust(int64_t width, const char *c)
+Align text on the right side of a space with given width, using const char *c for filling the space.
+
+### String rjust(int64_t width, const String &c);
+Align text on the right side of a space with given width, using char c for filling the space.
+
+
+

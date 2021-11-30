@@ -25,6 +25,7 @@ namespace sstring {
         // substring operator
         String operator() (int64_t lft);
         String operator() (int64_t lft, int64_t rgt);
+        String operator() (int64_t lft, int64_t rgt) const;
 
         // grapheme at index operator
         String operator[] (int64_t idx);
@@ -80,6 +81,26 @@ namespace sstring {
         std::vector<String> split(const String &d, unsigned int cnt=0);
 
 
+        // allignment methods.
+        String rjust(int64_t width);
+        String rjust(int64_t width, const char c);
+        String rjust(int64_t width, const std::string &c);
+        String rjust(int64_t width, const char *c);
+        String rjust(int64_t width, const String &c);
+
+        String ljust(int64_t width);
+        String ljust(int64_t width, const char c);
+        String ljust(int64_t width, const std::string &c);
+        String ljust(int64_t width, const char *c);
+        String ljust(int64_t width, const String &c);
+
+        String center(int64_t width);
+        String center(int64_t width, const char c);
+        String center(int64_t width, const std::string &c);
+        String center(int64_t width, const char *c);
+        String center(int64_t width, const String &c);
+
+
     protected:
         std::string str;
         int64_t len;
@@ -87,7 +108,13 @@ namespace sstring {
 
 
     private:
+        enum class Alignment {
+            RIGHT,
+            LEFT,
+            CENTER
+        };
         void rebuild();
+        String just(int64_t width, const String &c, Alignment dir);
 
     };
 
