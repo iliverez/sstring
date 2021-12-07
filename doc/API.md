@@ -192,8 +192,12 @@ Align text on the right side of a space with given width, std::string c for fill
 ### String rjust(int64_t width, const char *c)
 Align text on the right side of a space with given width, using const char *c for filling the space.
 
-### String rjust(int64_t width, const String &c);
+### String rjust(int64_t width, const String &c)
 Align text on the right side of a space with given width, using char c for filling the space.
 
 
+## Zero fill
+Fill a String with leading zeros
 
+### String zfill(int64_t width)
+Fill the string with leading zeroes. If the string is larger than the width, the whole String will be returned in a new String.
