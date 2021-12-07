@@ -731,6 +731,27 @@ TEST(SStringTestSuite, center_string_utf_large) {
 
 
 // -----------------------------------------------------------------
+// Zero fill
+TEST(SStringTestSuite, zfill_int) {
+    sstring::String s("34");
+    auto s2 = s.zfill(4);
+    ASSERT_EQ(s2, "0034");
+}
+
+TEST(SStringTestSuite, zfill_int_large) {
+    sstring::String s("34567");
+    auto s2 = s.zfill(4);
+    ASSERT_EQ(s2, "34567");
+}
+
+TEST(SStringTestSuite, zfill_float) {
+    sstring::String s("34.567");
+    auto s2 = s.zfill(7);
+    ASSERT_EQ(s2, "034.567");
+}
+
+
+// -----------------------------------------------------------------
 // Test concatenation operators
 TEST(SStringTestSuite, stdstr_concat) {
     std::string tmp1("mytest");

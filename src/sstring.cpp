@@ -318,6 +318,12 @@ namespace sstring {
 
 
     // ------------------------------------------------------------------------
+    String String::zfill(int64_t width) {
+        return just(width, String("0"), Alignment::RIGHT);
+    }
+
+
+    // ------------------------------------------------------------------------
     // private methods
     void String::rebuild() {
         char *p = (char *) str.c_str();

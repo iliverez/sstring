@@ -100,6 +100,9 @@ namespace sstring {
         String center(int64_t width, const char *c);
         String center(int64_t width, const String &c);
 
+        // zfill, pad a string, usully representing a number with zeros
+        // at the leftin given space. Take care for point and decimal digits.
+        String zfill(int64_t width);
 
     protected:
         std::string str;
