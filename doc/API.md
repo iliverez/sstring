@@ -35,6 +35,15 @@ Move assignment
 ### String operator=(std::string &&s)
 Creates a String object where the argument *std::string* is moved to it
 
+## Size and length
+
+### int64_t slen() const
+Return the length of the String as number of graphemes. This may be smaller then the result of *size()* which returns the number of bytes of the string content.
+
+### inline size_t size() const
+Return the size of of the string content as number of bytes.
+
+
 ## Substrings
 
 ### String operator() (int64_t lft)
