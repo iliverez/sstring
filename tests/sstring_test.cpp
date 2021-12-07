@@ -771,8 +771,6 @@ TEST(SStringTestSuite, ssistream) {
     sstring::String s;
     std::stringstream ss;
     ss << tmp1;
-    ss >> s;
-    ss.clear();
     ss << tmp2;
     ss >> s;
     ASSERT_EQ(s, sstring::String("mytestextended"));
