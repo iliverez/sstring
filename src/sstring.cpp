@@ -470,7 +470,7 @@ namespace sstring {
     {
         std::string tmp;
         is >> tmp;
-        s += tmp;
+        s = tmp;
         return is;
     }
 
