@@ -102,7 +102,21 @@ namespace sstring {
 
         // zfill, pad a string, usully representing a number with zeros
         // at the leftin given space. Take care for point and decimal digits.
-        String zfill(int64_t width);
+
+	String zfill(int64_t width);
+        // substitute a given substring with a given new one and will return
+        //  the result in a new string.
+        //
+        // Optionally, a count will be passed to denote how many occurrences 
+        // to replace. Default value will be -1 which means all.
+        //
+        // Optionally, the reverse option can be given, to start replacing from
+        // the end of the string. Default is to replace from the start.
+        //
+        // If the old substring is not found, the original string is returned in
+        // a new object.
+        // String replace(String ptrn, String s, int nm=-1, bool rvrs=false);
+
 
     protected:
         std::string str;
