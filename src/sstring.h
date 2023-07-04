@@ -2,6 +2,7 @@
 #define SSTRING_SSTRING_H
 
 #include <string>
+#include <cstdint>
 #include <vector>
 #include <iterator>
 
