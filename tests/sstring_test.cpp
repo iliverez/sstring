@@ -325,7 +325,7 @@ TEST(SStringTestSuite, join_array_cchar) {
 // Test split
 TEST(SStringTestSuite, split_const_char) {
     sstring::String s("my:test");
-    std::vector<sstring::String> v = s.split(":");
+    std::vector<sstring::String> v = s.split(':');
     ASSERT_EQ(v[0], "my");
     ASSERT_EQ(v[1], "test");
     ASSERT_EQ(v.size(), 2);
@@ -496,7 +496,7 @@ TEST(SStringTestSuite, rsplit_sstring) {
 
 TEST(SStringTestSuite, rsplit_const_char) {
     sstring::String s("my:test");
-    std::vector<sstring::String> v = s.rsplit(":");
+    std::vector<sstring::String> v = s.rsplit(':');
     ASSERT_EQ(v[0], "test");
     ASSERT_EQ(v[1], "my");
     ASSERT_EQ(v.size(), 2);

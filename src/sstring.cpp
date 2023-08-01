@@ -186,7 +186,9 @@ namespace sstring {
 
 
     std::vector<String> String::split(const char &d, unsigned int cnt) {
-        return split(String(std::to_string(d)), cnt);
+        std::string td = "";
+        td += d;
+        return split(String(td), cnt);
     }
 
     std::vector<String> String::split(const char *d, unsigned int cnt) {
@@ -224,7 +226,9 @@ namespace sstring {
 
     // rsplit functions
     std::vector<String> String::rsplit(const char &d, unsigned int cnt) {
-        return rsplit(String(std::to_string(d)), cnt);
+        std::string td = "";
+        td += d;
+        return rsplit(String(td), cnt);
     }
 
     std::vector<String> String::rsplit(const char *d, unsigned int cnt) {
