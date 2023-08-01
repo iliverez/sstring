@@ -484,6 +484,235 @@ TEST(SStringTestSuite, split_not_found) {
     ASSERT_EQ(v.size(), 1);
 }
 
+// rsplit
+TEST(SStringTestSuite, rsplit_sstring) {
+    sstring::String s("my:test");
+    sstring::String d(":");
+    std::vector<sstring::String> v = s.rsplit(d);
+    ASSERT_EQ(v[0], "test");
+    ASSERT_EQ(v[1], "my");
+    ASSERT_EQ(v.size(), 2);
+}
+
+TEST(SStringTestSuite, rsplit_const_char) {
+    sstring::String s("my:test");
+    std::vector<sstring::String> v = s.rsplit(":");
+    ASSERT_EQ(v[0], "test");
+    ASSERT_EQ(v[1], "my");
+    ASSERT_EQ(v.size(), 2);
+}
+
+TEST(SStringTestSuite, rsplit_std_str) {
+    sstring::String s("my:test");
+    std::string delim(":");
+    std::vector<sstring::String> v = s.rsplit(delim);
+    ASSERT_EQ(v[0], "test");
+    ASSERT_EQ(v[1], "my");
+    ASSERT_EQ(v.size(), 2);
+}
+
+
+TEST(SStringTestSuite, rsplit_const_char_utf8) {
+    sstring::String s("το:τεστ");
+    std::vector<sstring::String> v = s.rsplit(":");
+    ASSERT_EQ(v[0], "τεστ");
+    ASSERT_EQ(v[1], "το");
+    ASSERT_EQ(v.size(), 2);
+}
+
+TEST(SStringTestSuite, rsplit_const_char_emoji) {
+    sstring::String s("το:🐼:τεστ");
+    std::vector<sstring::String> v = s.rsplit(":");
+    ASSERT_EQ(v[0], "τεστ");
+    ASSERT_EQ(v[1], "🐼");
+    ASSERT_EQ(v[2], "το");
+    ASSERT_EQ(v.size(), 3);
+}
+
+TEST(SStringTestSuite, rsplit_const_char_right) {
+    sstring::String s("το🐼τεστ");
+    std::vector<sstring::String> v = s.rsplit("στ");
+    ASSERT_EQ(v[0], "");
+    ASSERT_EQ(v[1], "το🐼τε");
+    ASSERT_EQ(v.size(), 2);
+}
+
+TEST(SStringTestSuite, rsplit_const_char_left) {
+    sstring::String s("το🐼τεστ");
+    std::vector<sstring::String> v = s.rsplit("το");
+    ASSERT_EQ(v[0], "🐼τεστ");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v.size(), 2);
+}
+
+
+TEST(SStringTestSuite, rsplit_sstring_many) {
+    sstring::String s("new:test:number:six");
+    sstring::String d(":");
+    std::vector<sstring::String> v = s.rsplit(d);
+    ASSERT_EQ(v[0], "six");
+    ASSERT_EQ(v[1], "number");
+    ASSERT_EQ(v[2], "test");
+    ASSERT_EQ(v[3], "new");
+    ASSERT_EQ(v.size(), 4);
+}
+
+TEST(SStringTestSuite, rsplit_consecutive) {
+    sstring::String s("my::test");
+    sstring::String d(":");
+    std::vector<sstring::String> v = s.rsplit(d);
+    ASSERT_EQ(v[0], "test");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[2], "my");
+    ASSERT_EQ(v.size(), 3);
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_end) {
+    sstring::String s("my::test::");
+    sstring::String d(":");
+    std::vector<sstring::String> v = s.rsplit(d);
+    ASSERT_EQ(v[0], "");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[2], "test");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v[4], "my");
+    ASSERT_EQ(v.size(), 5);
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_start) {
+    sstring::String s("::my::test");
+    sstring::String d(":");
+    std::vector<sstring::String> v = s.rsplit(d);
+    ASSERT_EQ(v[0], "test");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[2], "my");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v[4], "");
+    ASSERT_EQ(v.size(), 5);
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_empty) {
+    sstring::String s(":::");
+    sstring::String d(":");
+    std::vector<sstring::String> v = s.rsplit(d);
+    ASSERT_EQ(v[0], "");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v.size(), 4);
+}
+
+TEST(SStringTestSuite, rsplit_empty_left) {
+    sstring::String s(",my,test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[0], "test");
+    ASSERT_EQ(v[1], "my");
+    ASSERT_EQ(v[2], "");
+}
+
+TEST(SStringTestSuite, rsplit_empty_right) {
+    sstring::String s("my,test,");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[2], "my");
+    ASSERT_EQ(v[1], "test");
+    ASSERT_EQ(v[0], "");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_two_left) {
+    sstring::String s(",,my,test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[1], "my");
+    ASSERT_EQ(v[0], "test");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_two_middle) {
+    sstring::String s("my,,test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[2], "my");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[0], "test");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_two_right) {
+    sstring::String s("my,test,,");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[3], "my");
+    ASSERT_EQ(v[2], "test");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[0], "");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_three_left) {
+    sstring::String s(",,,my,test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[4], "");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[1], "my");
+    ASSERT_EQ(v[0], "test");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_three_middle) {
+    sstring::String s("my,,,test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[3], "my");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[0], "test");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_three_right) {
+    sstring::String s("my,test,,,");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[4], "my");
+    ASSERT_EQ(v[3], "test");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[0], "");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_four_left) {
+    sstring::String s(",,,,my,test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[5], "");
+    ASSERT_EQ(v[4], "");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[1], "my");
+    ASSERT_EQ(v[0], "test");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_four_middle) {
+    sstring::String s("my,,,,test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[4], "my");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[0], "test");
+}
+
+TEST(SStringTestSuite, rsplit_consecutive_four_right) {
+    sstring::String s("my,test,,,,");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[5], "my");
+    ASSERT_EQ(v[4], "test");
+    ASSERT_EQ(v[3], "");
+    ASSERT_EQ(v[2], "");
+    ASSERT_EQ(v[1], "");
+    ASSERT_EQ(v[0], "");
+}
+
+TEST(SStringTestSuite, rsplit_not_found) {
+    sstring::String s("my:test");
+    std::vector<sstring::String> v = s.rsplit(",");
+    ASSERT_EQ(v[0], "my:test");
+    ASSERT_EQ(v.size(), 1);
+}
+
+
 
 // -----------------------------------------------------------------
 // Test alignment methods

@@ -81,6 +81,13 @@ namespace sstring {
         std::vector<String> split(const std::string &d, unsigned int cnt=0);
         std::vector<String> split(const String &d, unsigned int cnt=0);
 
+        // rsplit: Split a String using a delimiter from starting from the right.
+        // Return  
+        std::vector<String> rsplit(const char &d, unsigned int cnt=0);
+        std::vector<String> rsplit(const char *d, unsigned int cnt=0);
+        std::vector<String> rsplit(const std::string &d, unsigned int cnt=0);
+        std::vector<String> rsplit(const String &d, unsigned int cnt=0);
+
 
         // allignment methods.
         String rjust(int64_t width);

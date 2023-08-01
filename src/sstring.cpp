@@ -183,6 +183,8 @@ namespace sstring {
         gpos.clear();
     }
 
+
+
     std::vector<String> String::split(const char &d, unsigned int cnt) {
         return split(String(std::to_string(d)), cnt);
     }
@@ -219,6 +221,49 @@ namespace sstring {
         }
         return v;
     }
+
+    // rsplit functions
+    std::vector<String> String::rsplit(const char &d, unsigned int cnt) {
+        return rsplit(String(std::to_string(d)), cnt);
+    }
+
+    std::vector<String> String::rsplit(const char *d, unsigned int cnt) {
+        return rsplit(String(d), cnt);
+    }
+
+    std::vector<String> String::rsplit(const std::string &d, unsigned int cnt) {
+        return rsplit(String(d), cnt);
+    }
+
+    std::vector<String> String::rsplit(const String &d, unsigned int cnt) {
+        std::vector<String> v;
+        int n = 0;
+        size_t ofs = str.size();
+        size_t pos = str.size();
+        std::string st;
+        size_t t = 0;
+
+        while (true) {
+            pos = str.substr(0, pos+1).rfind(d.str);
+            if (pos == std::string::npos) {
+                if (v.empty()) {
+                    v.emplace_back(*this);
+                    return v;
+                }
+                break;
+            }
+            t = ofs - pos;
+            v.emplace_back(String(str.substr(pos + d.size(), ofs - pos)));
+            pos = pos - 1;
+            ofs = pos;
+            if (cnt > 0 and ++n == cnt) return v;
+        }
+        if (str.size() - ofs  - pos -1 >= 0) {
+            v.emplace_back(String(str.substr(0, ofs + 1)));
+        }
+        return v;
+    }
+
 
     // ------------------------------------------------------------------------
     // String alignment methods
