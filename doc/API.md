@@ -210,3 +210,50 @@ Fill a String with leading zeros
 
 ### String zfill(int64_t width)
 Fill the string with leading zeroes. If the string is larger than the width, the whole String will be returned in a new String.
+
+## Split and join
+A set of methods to split and join Strings. The delimiter can be a UTF-8 character.
+
+### std::vector<String> split(const char &d, unsigned int cnt=0)
+Split the String to tokens delimited by const char &d, starting from the left. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+### std::vector<String> split(const char *d, unsigned int cnt=0)
+Split the String to tokens delimited by const char *d, starting from the left. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+### std::vector<String> split(const std::string &d, unsigned int cnt=0)
+Split the String to tokens delimited by const std::string &d, starting from the left. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+### std::vector<String> split(const std::string &d, unsigned int cnt=0)
+Split the String to tokens delimited by const String &d, starting from the left. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+For example, if split is applied on String "this_is__a_test", the result will be a vector with elements "this","is","","a","test": 
+```C++
+sstring:String s("this_is__a_test");
+s.split('_');
+```
+
+### std::vector<String> rsplit(const char &d, unsigned int cnt=0)
+Split the String to tokens delimited by const char &d, starting from the right. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+### std::vector<String> rsplit(const char *d, unsigned int cnt=0)
+Split the String to tokens delimited by const char *d, starting from the right. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+### std::vector<String> rsplit(const std::string &d, unsigned int cnt=0)
+Split the String to tokens delimited by const std::string &d, starting from the right. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+### std::vector<String> rsplit(const std::string &d, unsigned int cnt=0)
+Split the String to tokens delimited by const String &d, starting from the right. If cnt is greater than zero, return the first cnt tokens.
+If the delimiter is not found, return the whole String as the first element of the vector.
+
+For example, if rsplit is applied on String "this_is__a_test", the result will be a vector with elements "test","a","","is","this": 
+```C++
+sstring:String s("this_is__a_test");
+s.rsplit('_');
+```
