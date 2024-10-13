@@ -111,7 +111,7 @@ namespace sstring {
         // zfill, pad a string, usully representing a number with zeros
         // at the leftin given space. Take care for point and decimal digits.
 
-	String zfill(int64_t width);
+        String zfill(int64_t width);
         // substitute a given substring with a given new one and will return
         //  the result in a new string.
         //
