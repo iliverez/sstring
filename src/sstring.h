@@ -125,6 +125,8 @@ namespace sstring {
         // a new object.
         // String replace(String ptrn, String s, int nm=-1, bool rvrs=false);
 
+        String upper() const;
+        String lower() const;
 
     protected:
         std::string str;
@@ -140,6 +142,16 @@ namespace sstring {
         };
         void rebuild();
         String just(int64_t width, const String &c, Alignment dir);
+	   
+        // Helper function to convert a Unicode character to lowercase
+        char32_t to_lower(char32_t ch) const;
+
+        // Helper function to convert a Unicode character to uppercase
+        char32_t to_upper(char32_t ch) const;
+
+
+	// helper string for i18n supporrt
+	//std::string data;
 
     };
 

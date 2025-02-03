@@ -1016,3 +1016,34 @@ TEST(SStringTestSuite, ssostream) {
 }
 
 
+// -----------------------------------------------------------------
+// Test i18n upper/lower
+TEST(SStringTestSuite, strUpper) {
+     sstring::String s("γαϊδούρι");
+     sstring::String u = s.upper();
+     ASSERT_EQ(u, "ΓΑΪΔΟΎΡΙ");
+}
+
+TEST(SStringTestSuite, strLower) {
+     sstring::String s("ΓΑΪΔΟΎΡΙ");
+     sstring::String u = s.lower();
+     ASSERT_EQ(u, "γαϊδούρι");
+}
+
+
+// Test i18n upper/lower sequence
+
+TEST(SStringTestSuite, strUpperSeq) {
+     sstring::String s("ΐ");
+     auto u = s.upper();
+     ASSERT_EQ(u, "Ϊ́");
+}
+
+TEST(SStringTestSuite, strLowerSeq) {
+     sstring::String s("Ϊ́");
+     auto u = s.lower();
+     ASSERT_EQ(u, "ΐ");
+}
+
+
+

@@ -1,6 +1,10 @@
 #include<iostream>
 #include <sstream>
 #include <climits>
+#include <locale>
+#include <codecvt>
+
+#include "i18n.h"
 #include "sstring.h"
 
 uint64_t absl(int64_t n);
@@ -526,6 +530,38 @@ namespace sstring {
     inline static size_t max_size() {
         return LONG_MAX;
     }
+
+    String String::lower() const {
+        std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
+        std::u32string u32str = convert.from_bytes(str);
+
+        for (size_t i = 0; i < u32str.size(); ++i) {
+            u32str[i] = to_lower(u32str[i]);
+        }
+        return String(convert.to_bytes(u32str));
+    }
+
+    String String::upper() const {
+        std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> convert;
+        std::u32string u32str = convert.from_bytes(str);
+
+        for (size_t i = 0; i < u32str.size(); ++i) {
+            u32str[i] = to_upper(u32str[i]);
+        }
+        return String(convert.to_bytes(u32str));
+    }
+
+    char32_t String::to_lower(char32_t ch) const {
+        auto it = LOWER_TABLE.find(ch);
+        return (it != LOWER_TABLE.end()) ? it->second : ch;
+    }
+
+    char32_t String::to_upper(char32_t ch) const {
+        auto it = UPPER_TABLE.find(ch);
+        return (it != UPPER_TABLE.end()) ? it->second : ch;
+    }
+
+
 
 }
 
