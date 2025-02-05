@@ -25,7 +25,7 @@ const std::unordered_map<char32_t, char32_t> UPPER_TABLE = {
     {L'ν', L'Ν'}, {L'ξ', L'Ξ'}, {L'ο', L'Ο'}, {L'π', L'Π'}, {L'ρ', L'Ρ'}, {L'σ', L'Σ'},
     {L'τ', L'Τ'}, {L'υ', L'Υ'}, {L'φ', L'Φ'}, {L'χ', L'Χ'}, {L'ψ', L'Ψ'}, {L'ω', L'Ω'},
     {L'ά', L'Ά'}, {L'έ', L'Έ'}, {L'ή', L'Ή'}, {L'ϊ', L'Ϊ'}, {L'ί', L'Ί'},  
-    {L'ό', L'Ό'}, {L'ύ', L'Ύ'}, {L'ϋ', L'Ϋ'}, {L'ώ', L'Ώ'},
+    {L'ό', L'Ό'}, {L'ύ', L'Ύ'}, {L'ϋ', L'Ϋ'}, {L'ώ', L'Ώ'}, {L'ΐ', L'Ϊ'}
 };
 
 // Lookup table for uppercase to lowercase mapping

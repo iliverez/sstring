@@ -1045,5 +1045,11 @@ TEST(SStringTestSuite, strLowerSeq) {
      ASSERT_EQ(u, "ΐ");
 }
 
+TEST(SStringTestSuite, strUpperSeq2) {
+     sstring::String s("ΐ");
+     auto u = s.upper();
+     ASSERT_EQ(u, "Ϊ");
+}
+
 
 
